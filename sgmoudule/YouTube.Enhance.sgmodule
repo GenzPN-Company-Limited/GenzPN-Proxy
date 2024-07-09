@@ -1,0 +1,24 @@
+#!name=Youtube (Music) Enhance
+#!desc=For Youtube & Youtube Music
+#!arguments=Block Upload Button:true,Block Segment Button:true,Subtitle Translation Language:off,Lyric Translation Language:off,Script Execution Engine:jsc,Enable Debug Mode:false
+#!arguments-desc=- Block Parameters: [true, false] \n- Translation Parameters: [language code, off] \n- Script Engine: [auto, jsc, webview]\n\n1. Language codes follow Google Translate Languages Codes. Use "off" to disable translation.\n2. It is recommended to use the jsc engine, but you can switch to webview to experience Surge's new features.\n3. Enable debug mode to output more logs.
+
+# Credit : Maasea Github and ChatGPT
+# > Note
+# Disable Picture-in-Picture and Background Playback within the client:
+#   - Settings -> General -> Picture-in-Picture
+#   - Settings -> Background Playback & Downloads -> Background Playback
+
+[Rule]
+AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT
+AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT
+
+[Script]
+youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{Script Execution Engine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.request.preview.js
+youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{Script Execution Engine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.preview.js,argument="{"lyricLang":"off","captionLang":"{{{Subtitle Translation Language}}}","blockUpload":{{{Block Upload Button}}},"blockImmersive":{{{Block Segment Button}}},"debug":{{{Enable Debug Mode}}}}"
+
+[Map Local]
+^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data=""
+
+[MITM]
+hostname = %APPEND% *.googlevideo.com, youtubei.googleapis.com

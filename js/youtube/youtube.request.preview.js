@@ -2070,16 +2070,16 @@
         decodeArgument() {
             let e = {
                     // Translated placeholders or descriptions for various UI elements
-                    lyricLang: "Lyrics Translation Language",
-                    captionLang: "Caption Translation Language",
+                    // lyricLang: "Lyrics Translation Language",
+                    // captionLang: "Caption Translation Language",
                     blockUpload: "Block Upload Button",
                     blockImmersive: "Block Immersive Mode Button",
                     debug: "Enable Debug Mode"
                 },
                 n = {
                     // Set the language for lyrics and captions to English
-                    lyricLang: "en",
-                    captionLang: "en",
+                    // lyricLang: "en",
+                    // captionLang: "en",
                     blockUpload: !0,
                     blockImmersive: !0,
                     debug: !1

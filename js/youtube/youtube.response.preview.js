@@ -2855,21 +2855,23 @@
         }
         decodeArgument() {
             let e = {
-                    //lyricLang: "\u6B4C\u8BCD\u7FFB\u8BD1\u8BED\u8A00",
-                    //captionLang: "\u5B57\u5E55\u7FFB\u8BD1\u8BED\u8A00",
-                    blockUpload: "\u5C4F\u853D\u4E0A\u4F20\u6309\u94AE",
-                    blockImmersive: "\u5C4F\u853D\u9009\u6BB5\u6309\u94AE",
-                    debug: "\u542F\u52A8\u8C03\u8BD5\u6A21\u5F0F"
+                    // Translated placeholders or descriptions for various UI elements
+                    lyricLang: "Lyrics Translation Language",
+                    captionLang: "Caption Translation Language",
+                    blockUpload: "Block Upload Button",
+                    blockImmersive: "Block Immersive Mode Button",
+                    debug: "Enable Debug Mode"
                 },
                 n = {
-                    //lyricLang: "zh-Hans",
-                    //captionLang: "zh-Hans",
+                    // Set the language for lyrics and captions to English
+                    lyricLang: "en",
+                    captionLang: "en",
                     blockUpload: !0,
                     blockImmersive: !0,
                     debug: !1
                 };
             return b.decodeParams(n, e)
-        }
+        }        
         fromBinary(e) {
             return e instanceof Uint8Array ? (this.message = this.msgType.fromBinary(e), b.debug(`raw: ${Math.floor(e.length/1024)} kb`), this) : (b.log("YouTube can not get binaryBody"), b.exit(), this)
         }
@@ -2977,7 +2979,7 @@
     }
 
     function Gt(t, e) {
-        return `https://translate.google.com/translate_a/single?client=gtx&sl=auto&tl=${e}&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&source=bh&ssel=0&tsel=0&kc=1&tk=${ir(t)}&q=${encodeURIComponent(t)}`
+        return `https://translate.google.com/translate_a/single?client=gtx&sl=auto&tl=en&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&source=bh&ssel=0&tsel=0&kc=1&tk=${ir(t)}&q=${encodeURIComponent(t)}`
     }
     var X = class extends D {
             constructor(e = Rt, n = "Browse") {

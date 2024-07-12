@@ -14,8 +14,8 @@ AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT
 AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT
 
 [Script]
-youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{Script Execution Engine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.request.preview.js
-youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{Script Execution Engine}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.preview.js,argument="{"lyricLang":"off","captionLang":"{{{Subtitle Translation Language}}}","blockUpload":{{{Block Upload Button}}},"blockImmersive":{{{Block Segment Button}}},"debug":{{{Enable Debug Mode}}}}"
+youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{Script Execution Engine}}},script-path=https://raw.githubusercontent.com/GenzPN-Company-Limited/GenzPN-Proxy/main/js/youtube/youtube.request.preview.js
+youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{Script Execution Engine}}},script-path=https://raw.githubusercontent.com/GenzPN-Company-Limited/GenzPN-Proxy/main/js/youtube/youtube.response.preview.js,argument="{"lyricLang":"off","captionLang":"{{{Subtitle Translation Language}}}","blockUpload":{{{Block Upload Button}}},"blockImmersive":{{{Block Segment Button}}},"debug":{{{Enable Debug Mode}}}}"
 
 [Map Local]
 ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data=""

@@ -2977,10 +2977,6 @@
         for (let o = 0; o < e.length - 2; o += 3) s = e.charAt(o + 2), s = s >= n ? s.charCodeAt(0) - 87 : Number(s), s = e.charAt(o + 1) == r ? t >>> s : t << s, t = e.charAt(o) == r ? t + s & 4294967295 : t ^ s;
         return t
     }
-
-    function Gt(t, e) {
-        return `https://translate.google.com/translate_a/single?client=gtx&sl=auto&tl=vi&hl=vi&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&source=bh&ssel=0&tsel=0&kc=1&tk=${ir(t)}&q=${encodeURIComponent(t)}`
-    }       
     var X = class extends D {
             constructor(e = Rt, n = "Browse") {
                 super(e, n)
@@ -3061,64 +3057,6 @@ ${c[0][g][0]}`
                     }
                 }))
             }
-            addTranslateCaption() {
-                let e = this.argument.captionLang;
-                e !== "off" && this.iterate(this.message, "captionTracks", (n, r) => {
-                    let s = n.captionTracks,
-                        o = n.audioTracks;
-                    if (Array.isArray(s)) {
-                        let a = {
-                                [e]: 2,
-                                vi: 1
-                            },
-                            c = -1,
-                            f = 0;
-                        for (let m = 0; m < s.length; m++) {
-                            let l = s[m],
-                                g = a[l.languageCode];
-                            g && g > c && (c = g, f = m), l.isTranslatable = !0
-                        }
-                        if (c !== 2) {
-                            let m = new Ve({
-                                baseUrl: s[f].baseUrl + `&tlang=${e}`,
-                                name: {
-                                    runs: [{
-                                        text: `@Enhance (${e})`
-                                    }]
-                                },
-                                vssId: `.${e}`,
-                                languageCode: e
-                            });
-                            s.push(m)
-                        }
-                        if (Array.isArray(o)) {
-                            let m = c === 2 ? f : s.length - 1;
-                            for (let l of o) l.captionTrackIndices?.includes(m) || l.captionTrackIndices.push(m), l.defaultCaptionTrackIndex = m, l.captionsInitialState = 3
-                        }
-                    }
-                    let i = {
-                        de: "Deutsch",
-                        ru: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
-                        fr: "Fran\xE7ais",
-                        fil: "Filipino",
-                        ko: "\uD55C\uAD6D\uC5B4",
-                        ja: "\u65E5\u672C\u8A9E",
-                        en: "English",
-                        vi: "Ti\u1EBFng Vi\u1EC7t",
-                        "zh-Hant": "\u4E2D\u6587\uFF08\u7E41\u9AD4\uFF09",
-                        "zh-Hans": "\u4E2D\u6587\uFF08\u7B80\u4F53\uFF09",
-                        und: "@VirgilClyne"
-                    };
-                    n.translationLanguages = Object.entries(i).map(([a, c]) => new Je({
-                        languageCode: a,
-                        languageName: {
-                            runs: [{
-                                text: c
-                            }]
-                        }
-                    })), r.length = 0
-                })
-            }            
         },
         Te = class extends X {
             constructor(e = Ct, n = "Search") {

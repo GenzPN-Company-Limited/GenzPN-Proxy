@@ -2855,15 +2855,15 @@
         }
         decodeArgument() {
             let e = {
-                    // lyricLang: "\u6B4C\u8BCD\u7FFB\u8BD1\u8BED\u8A00",
-                    // captionLang: "\u5B57\u5E55\u7FFB\u8BD1\u8BED\u8A00",
+                    //lyricLang: "\u6B4C\u8BCD\u7FFB\u8BD1\u8BED\u8A00",
+                    //captionLang: "\u5B57\u5E55\u7FFB\u8BD1\u8BED\u8A00",
                     blockUpload: "\u5C4F\u853D\u4E0A\u4F20\u6309\u94AE",
                     blockImmersive: "\u5C4F\u853D\u9009\u6BB5\u6309\u94AE",
                     debug: "\u542F\u52A8\u8C03\u8BD5\u6A21\u5F0F"
                 },
                 n = {
-                    lyricLang: "en-US",
-                    captionLang: "en-US",
+                    //lyricLang: "zh-Hans",
+                    //captionLang: "zh-Hans",
                     blockUpload: !0,
                     blockImmersive: !0,
                     debug: !1
@@ -2977,7 +2977,7 @@
     }
 
     function Gt(t, e) {
-        return `https://translate.google.com/translate_a/single?client=gtx&sl=auto&tl=${e}&hl=en-US&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&source=bh&ssel=0&tsel=0&kc=1&tk=${ir(t)}&q=${encodeURIComponent(t)}`
+        return `https://translate.google.com/translate_a/single?client=gtx&sl=auto&tl=${e}&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&source=bh&ssel=0&tsel=0&kc=1&tk=${ir(t)}&q=${encodeURIComponent(t)}`
     }
     var X = class extends D {
             constructor(e = Rt, n = "Browse") {
@@ -3104,7 +3104,7 @@ ${c[0][g][0]}`
                         en: "English",
                         vi: "Ti\u1EBFng Vi\u1EC7t",
                         "zh-Hant": "\u4E2D\u6587\uFF08\u7E41\u9AD4\uFF09",
-                        "en-US": "\u4E2D\u6587\uFF08\u7B80\u4F53\uFF09",
+                        "zh-Hans": "\u4E2D\u6587\uFF08\u7B80\u4F53\uFF09",
                         und: "@VirgilClyne"
                     };
                     n.translationLanguages = Object.entries(i).map(([a, c]) => new Je({

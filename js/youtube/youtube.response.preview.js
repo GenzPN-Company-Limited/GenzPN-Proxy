@@ -2979,8 +2979,8 @@
     }
 
     function Gt(t, e) {
-        return `https://translate.google.com/translate_a/single?client=gtx&sl=auto&tl=en&hl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&source=bh&ssel=0&tsel=0&kc=1&tk=${ir(t)}&q=${encodeURIComponent(t)}`
-    }
+        return `https://translate.google.com/translate_a/single?client=gtx&sl=auto&tl=vi&hl=vi&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&source=bh&ssel=0&tsel=0&kc=1&tk=${ir(t)}&q=${encodeURIComponent(t)}`
+    }       
     var X = class extends D {
             constructor(e = Rt, n = "Browse") {
                 super(e, n)
@@ -3069,7 +3069,7 @@ ${c[0][g][0]}`
                     if (Array.isArray(s)) {
                         let a = {
                                 [e]: 2,
-                                en: 1
+                                vi: 1
                             },
                             c = -1,
                             f = 0;
@@ -3118,7 +3118,7 @@ ${c[0][g][0]}`
                         }
                     })), r.length = 0
                 })
-            }
+            }            
         },
         Te = class extends X {
             constructor(e = Ct, n = "Search") {

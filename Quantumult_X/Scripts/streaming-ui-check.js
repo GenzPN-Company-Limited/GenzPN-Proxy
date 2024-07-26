@@ -1,21 +1,49 @@
+/***
+
+Thanks to & modified from 
+1. https://gist.githubusercontent.com/Hyseen/b06e911a41036ebc36acf04ddebe7b9a/raw/nf_check.js
+2. https://github.com/AtlantisGawrGura/Quantumult-X-Scripts/blob/main/media.js
+3. https://github.com/CoiaPrant/MediaUnlock_Test/blob/main/check.sh
+4. https://github.com/Netflixxp/chatGPT/blob/main/chat.sh
+
+For Quantumult-X 598+ ONLY!!
+
+2023-02-14
+
+- 支持 ChatGPT 检测
+
+[task_local]
+
+event-interaction https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/streaming-ui-check.js, tag=流媒体-解锁查询, img-url=checkmark.seal.system, enabled=true
+
+@XIAO_KOP
+
+**/
+
 const BASE_URL = 'https://www.netflix.com/title/';
 const BASE_URL_YTB = "https://www.youtube.com/premium";
-const BASE_URL_DISNEY = 'https://www.disneyplus.com';
-const BASE_URL_Dazn = "https://startup.core.indazn.com/misl/v5/Startup";
-const BASE_URL_Param = "https://www.paramountplus.com/"
-const FILM_ID = 81280792
-const BASE_URL_Discovery_token = "https://us1-prod-direct.discoveryplus.com/token?deviceId=d1a4a5d25212400d1e6985984604d740&realm=go&shortlived=true"
-const BASE_URL_Discovery = "https://us1-prod-direct.discoveryplus.com/users/me"
-const BASE_URL_GPT = 'https://chat.openai.com/'
+const BASE_URL_GPT = 'https://chat.openai.com/';
 const Region_URL_GPT = 'https://chat.openai.com/cdn-cgi/trace'
+
+const FILM_ID = 81280792
+
+const link = { "media-url": "https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/img/southpark/7.png" } 
+const policy_name = "Netflix" //填入你的 netflix 策略组名
+
+const arrow = " ➟ "
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36'
 
-const STATUS_COMING = 2;
-const STATUS_AVAILABLE = 1;
-const STATUS_NOT_AVAILABLE = 0;
-const STATUS_TIMEOUT = -1;
-const STATUS_ERROR = -2;
+// 即将登陆
+const STATUS_COMING = 2
+// 支持解锁
+const STATUS_AVAILABLE = 1
+// 不支持解锁
+const STATUS_NOT_AVAILABLE = 0
+// 检测超时
+const STATUS_TIMEOUT = -1
+// 检测异常
+const STATUS_ERROR = -2
 
 var opts = {
   policy: $environment.params
@@ -26,174 +54,107 @@ var opts1 = {
   redirection: false
 };
 
-var flags = new Map([
-  ["US", "🇺🇸"], ["UK", "🇬🇧"], ["JP", "🇯🇵"], ["FR", "🇫🇷"], ["DE", "🇩🇪"], ["IT", "🇮🇹"], ["ES", "🇪🇸"], ["CN", "🇨🇳"], ["KR", "🇰🇷"], ["RU", "🇷🇺"]
-]);
+var flags = new Map([[ "AC" , "🇦🇨" ] ,["AE","🇦🇪"], [ "AF" , "🇦🇫" ] , [ "AI" , "🇦🇮" ] , [ "AL" , "🇦🇱" ] , [ "AM" , "🇦🇲" ] , [ "AQ" , "🇦🇶" ] , [ "AR" , "🇦🇷" ] , [ "AS" , "🇦🇸" ] , [ "AT" , "🇦🇹" ] , [ "AU" , "🇦🇺" ] , [ "AW" , "🇦🇼" ] , [ "AX" , "🇦🇽" ] , [ "AZ" , "🇦🇿" ] , ["BA", "🇧🇦"], [ "BB" , "🇧🇧" ] , [ "BD" , "🇧🇩" ] , [ "BE" , "🇧🇪" ] , [ "BF" , "🇧🇫" ] , [ "BG" , "🇧🇬" ] , [ "BH" , "🇧ahrain"] , [ "BI" , "🇧🇮" ] , [ "BJ" , "🇧🇯" ] , [ "BM" , "🇧🇲" ] , [ "BN" , "🇧🇳" ] , [ "BO" , "🇧🇴" ] , [ "BR" , "🇧🇷" ] , [ "BS" , "🇧🇸" ] , [ "BT" , "🇧🇹" ] , [ "BV" , "🇧🇻" ] , [ "BW" , "🇧🇼" ] , [ "BY" , "🇧🇾" ] , [ "BZ" , "🇧🇿" ] , [ "CA" , "🇨🇦" ] , [ "CF" , "🇨🇫" ] , [ "CH" , "🇨🇭" ] , [ "CK" , "🇨🇰" ] , [ "CL" , "🇨🇱" ] , [ "CM" , "🇨🇲" ] , [ "CN" , "🇨🇳" ] , [ "CO" , "🇨🇴" ] , [ "CP" , "🇨🇵" ] , [ "CR" , "🇨🇷" ] , [ "CU" , "🇨🇺" ] , [ "CV" , "🇨🇻" ] , [ "CW" , "🇨🇼" ] , [ "CX" , "🇨🇽" ] , [ "CY" , "🇨🇾" ] , [ "CZ" , "🇨🇿" ] , [ "DE" , "🇩🇪" ] , [ "DG" , "🇩🇬" ] , [ "DJ" , "🇩🇯" ] , [ "DK" , "🇩🇰" ] , [ "DM" , "🇩🇲" ] , [ "DO" , "🇩🇴" ] , [ "DZ" , "🇩🇿" ] , [ "EA" , "🇪🇦" ] , [ "EC" , "🇪🇨" ] , [ "EE" , "🇪🇪" ] , [ "EG" , "🇪🇬" ] , [ "EH" , "🇪🇭" ] , [ "ER" , "🇪🇷" ] , [ "ES" , "🇪🇸" ] , [ "ET" , "🇪🇹" ] , [ "EU" , "🇪🇺" ] , [ "FI" , "🇫🇮" ] , [ "FJ" , "🇫🇯" ] , [ "FK" , "🇫🇰" ] , [ "FM" , "🇫" ] , [ "FO" , "🇫" ] , [ "FR" , "🇫🇷" ] , [ "GA" , "🇬🇦" ] , [ "GB" , "🇬🇧" ] , [ "HK" , "🇭🇰" ] ,["HU","🇭🇺"], [ "ID" , "🇮🇩" ] , [ "IE" , "🇮🇪" ] , [ "IL" , "🇮🇱" ] , [ "IM" , "🇮🇲" ] , [ "IN" , "🇮🇳" ] , [ "IS" , "🇮🇸" ] , [ "IT" , "🇮🇹" ] , [ "JP" , "🇯🇵" ] , [ "KR" , "🇰🇷" ] , [ "LU" , "🇱🇺" ] , [ "MO" , "🇲🇴" ] , [ "MX" , "🇲🇽" ] , [ "MY" , "🇲🇾" ] , [ "NL" , "🇳🇱" ] , [ "PH" , "🇵🇭" ] , [ "RO" , "🇷🇴" ] , [ "RS" , "🇷🇸" ] , [ "RU" , "🇷🇺" ] , [ "RW" , "🇷🇼" ] , [ "SA" , "🇸🇦" ] , [ "SB" , "🇧" ] , [ "SC" , "🇸🇨" ] , [ "SD" , "🇸🇩" ] , [ "SE" , "🇸🇪" ] , [ "SG" , "🇸🇬" ] , [ "TH" , "🇹🇭" ] , [ "TN" , "🇹🇳" ] , [ "TO" , "🇹🇴" ] , [ "TR" , "🇹🇷" ] , [ "TV" , "🇹🇻" ] , [ "TW" , "🇹🇼" ] , [ "UK" , "🇬🇧" ] , [ "UM" , "🇺🇲" ] , [ "US" , "🇺🇸" ] , [ "UY" , "🇺🇾" ] , [ "UZ" , "🇺🇿" ] , [ "VA" , "🇻🇦" ] , [ "VE" , "🇻🇪" ] , [ "VG" , "🇻🇬" ] , [ "VI" , "🇻🇮" ] , [ "VN" , "🇻🇳" ] , [ "ZA" , "🇿🇦"] ])
 
-let result = {
-  "title": '📺 Streaming Service Check',
-  "YouTube": '<b>YouTube: </b>Test failed, please try again ❗️',
-  "Netflix": '<b>Netflix: </b>Test failed, please try again ❗️',
-  "Dazn": "<b>Dazn: </b>Test failed, please try again ❗️",
-  "Disney": "<b>Disney+: </b>Test failed, please try again ❗️",
-  "Paramount": "<b>Paramount+: </b>Test failed, please try again ❗️",
-  "Discovery": "<b>Discovery+: </b>Test failed, please try again ❗️',
-  "ChatGPT": "<b>ChatGPT: </b>Test failed, please try again ❗️"
+var CHECK_PARAM = {
+  netflix: "netflix",
+  youtube_premium: "youtube_premium",
+  chatGPT: "chatGPT",
 };
 
-(async () => {
-  await testYTB();
-  await testDazn();
-  await testParam();
-  await testNf(FILM_ID);
-  await testDiscovery();
-  await testChatGPT();
-  let { region, status } = await testDisneyPlus();
+var mediaList = [CHECK_PARAM.netflix, CHECK_PARAM.youtube_premium, CHECK_PARAM.chatGPT]
 
-  if (status == STATUS_COMING) {
-    result["Disney"] = "<b>Disney+: </b>Upcoming ➟ " + '⟦' + flags.get(region.toUpperCase()) + "⟧ ⚠️";
-  } else if (status == STATUS_AVAILABLE) {
-    result["Disney"] = "<b>Disney+: </b>Available ➟ " + '⟦' + flags.get(region.toUpperCase()) + "⟧ 🎉";
-  } else if (status == STATUS_NOT_AVAILABLE) {
-    result["Disney"] = "<b>Disney+: </b>Not available ➟ " + '⟦' + flags.get(region.toUpperCase()) + "⟧ 🚫";
-  } else if (status == STATUS_TIMEOUT) {
-    result["Disney"] = "<b>Disney+: </b>Timeout ➟ " + '⟦' + flags.get(region.toUpperCase()) + "⟧ ⏳";
-  } else if (status == STATUS_ERROR) {
-    result["Disney"] = "<b>Disney+: </b>Error ➟ " + '⟦' + flags.get(region.toUpperCase()) + "⟧ ❗️";
-  }
-
-  console.log("Results: " + JSON.stringify(result));
-  updateResultOnScreen(result);
-})();
-
-async function testYTB() {
-  try {
-    let response = await fetch(BASE_URL_YTB, {
-      method: 'GET',
-      headers: { 'User-Agent': UA }
-    });
-    if (response.status === 200) {
-      result["YouTube"] = '<b>YouTube: </b>Available 🎉';
-    } else {
-      result["YouTube"] = '<b>YouTube: </b>Not available 🚫';
+  ; (async () => {
+    let panel_result = {
+      title: "Streaming - Unlock Status",
+      content: "",
+      icon: "checkmark.seal",
+      'icon-color': "#5AC8FA",      
     }
-  } catch (error) {
-    console.error("Error testing YouTube:", error);
-    result["YouTube"] = '<b>YouTube: </b>Error ❗️';
-  }
-}
+    await Promise.all(mediaList.map(async (media) => {
+      let result;
+      try {
+        switch (media) {
+          case CHECK_PARAM.netflix:
+            result = await checkNetflix();
+            break;
+          case CHECK_PARAM.youtube_premium:
+            result = await checkYT();
+            break;
+          case CHECK_PARAM.chatGPT:
+            result = await checkGPT();
+            break;
+          default:
+            break;
+        }
+        panel_result['content'] += result + "\n";
+      } catch (error) {
+        console.log(error)
+      }
+    }))
+    $done(panel_result)
+  })()
 
-async function testDazn() {
-  try {
-    let response = await fetch(BASE_URL_Dazn, {
-      method: 'GET',
-      headers: { 'User-Agent': UA }
-    });
-    if (response.status === 200) {
-      result["Dazn"] = '<b>Dazn: </b>Available 🎉';
-    } else {
-      result["Dazn"] = '<b>Dazn: </b>Not available 🚫';
+  async function checkNetflix() {
+    try {
+      let response = await httpAPI(BASE_URL + FILM_ID, 'GET', null, opts);
+      console.log("Netflix: " + response.statusCode);
+      if (response.statusCode === 200) {
+        let url = response.headers['x-originating-url'];
+        let region = url.split('/')[3];
+        region = region === 'title' ? 'us' : region;
+        let full_region = flags.get(region.toUpperCase()) ?? "Unknown region";
+        return "Netflix:  " + full_region.toUpperCase() + arrow + "Unlocked ✔";
+      } else if (response.statusCode === 403) {
+        return "Netflix:  " + "Unable to use Netflix";
+      } else {
+        return "Netflix:  " + "Check failed";
+      }
+    } catch (error) {
+      return "Netflix:  " + "Check error";
     }
-  } catch (error) {
-    console.error("Error testing Dazn:", error);
-    result["Dazn"] = '<b>Dazn: </b>Error ❗️';
   }
-}
-
-async function testParam() {
-  try {
-    let response = await fetch(BASE_URL_Param, {
-      method: 'GET',
-      headers: { 'User-Agent': UA }
-    });
-    if (response.status === 200) {
-      result["Paramount"] = '<b>Paramount+: </b>Available 🎉';
-    } else {
-      result["Paramount"] = '<b>Paramount+: </b>Not available 🚫';
+  
+  async function checkYT() {
+    try {
+      let response = await httpAPI(BASE_URL_YTB, 'GET', null, opts);
+      if (response.statusCode === 200) {
+        let region = response.headers['x-originating-url'].split('/')[3];
+        let full_region = flags.get(region.toUpperCase()) ?? "Unknown region";
+        return "YouTube Premium:  " + full_region.toUpperCase() + arrow + "Unlocked ✔";
+      } else if (response.statusCode === 403) {
+        return "YouTube Premium:  " + "Unable to use YouTube Premium";
+      } else {
+        return "YouTube Premium:  " + "Check failed";
+      }
+    } catch (error) {
+      return "YouTube Premium:  " + "Check error";
     }
-  } catch (error) {
-    console.error("Error testing Paramount:", error);
-    result["Paramount"] = '<b>Paramount+: </b>Error ❗️';
   }
-}
-
-async function testDisneyPlus() {
-  try {
-    let response = await fetch(BASE_URL_DISNEY, {
-      method: 'GET',
-      headers: { 'User-Agent': UA }
-    });
-    let status;
-    if (response.status === 200) {
-      status = STATUS_AVAILABLE;
-    } else if (response.status === 403) {
-      status = STATUS_COMING;
-    } else if (response.status === 404) {
-      status = STATUS_NOT_AVAILABLE;
-    } else if (response.status === 408) {
-      status = STATUS_TIMEOUT;
-    } else {
-      status = STATUS_ERROR;
+  
+  async function checkGPT() {
+    try {
+      let response = await httpAPI(Region_URL_GPT, 'GET', null, opts);
+      let region = response.body.split("loc=")[1].split("\n")[0];
+      let full_region = flags.get(region.toUpperCase()) ?? "Unknown region";
+      return "ChatGPT:  " + full_region.toUpperCase() + arrow + "Unlocked ✔";
+    } catch (error) {
+      return "ChatGPT:  " + "Check failed";
     }
-    return { region: "US", status: status };
-  } catch (error) {
-    console.error("Error testing Disney Plus:", error);
-    return { region: "US", status: STATUS_ERROR };
   }
-}
+  
 
-async function testNf(id) {
-  try {
-    let response = await fetch(BASE_URL + id, {
-      method: 'GET',
-      headers: { 'User-Agent': UA }
-    });
-    if (response.status === 200) {
-      result["Netflix"] = '<b>Netflix: </b>Available 🎉';
-    } else {
-      result["Netflix"] = '<b>Netflix: </b>Not available 🚫';
+function httpAPI(url, method, headers, options) {
+  return new Promise((resolve, reject) => {
+    let request = {
+      url: url,
+      method: method,
+      headers: headers,
+      ...options
     }
-  } catch (error) {
-    console.error("Error testing Netflix:", error);
-    result["Netflix"] = '<b>Netflix: </b>Error ❗️';
-  }
-}
-
-async function testDiscovery() {
-  try {
-    let response = await fetch(BASE_URL_Discovery_token, {
-      method: 'GET',
-      headers: { 'User-Agent': UA }
-    });
-    let data = await response.json();
-    if (response.status === 200 && data.access_token) {
-      result["Discovery"] = '<b>Discovery+: </b>Available 🎉';
-    } else {
-      result["Discovery"] = '<b>Discovery+: </b>Not available 🚫';
-    }
-  } catch (error) {
-    console.error("Error testing Discovery+:", error);
-    result["Discovery"] = '<b>Discovery+: </b>Error ❗️';
-  }
-}
-
-async function testChatGPT() {
-  try {
-    let response = await fetch(BASE_URL_GPT, {
-      method: 'GET',
-      headers: { 'User-Agent': UA }
-    });
-    if (response.status === 200) {
-      result["ChatGPT"] = '<b>ChatGPT: </b>Available 🎉';
-    } else {
-      result["ChatGPT"] = '<b>ChatGPT: </b>Not available 🚫';
-    }
-  } catch (error) {
-    console.error("Error testing ChatGPT:", error);
-    result["ChatGPT"] = '<b>ChatGPT: </b>Error ❗️';
-  }
-}
-
-function updateResultOnScreen(result) {
-  // Implement the logic to update the result on the screen
+    $httpClient.get(request, (error, response, body) => {
+      if (error) reject(error)
+      resolve(response)
+    })
+  })
 }

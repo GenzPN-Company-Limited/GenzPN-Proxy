@@ -98,50 +98,56 @@ var mediaList = [CHECK_PARAM.netflix, CHECK_PARAM.youtube_premium, CHECK_PARAM.c
   async function checkNetflix() {
     try {
       let response = await httpAPI(BASE_URL + FILM_ID, 'GET', null, opts);
-      console.log("Netflix: " + response.statusCode);
+      console.log("Netflix Response:", response);
       if (response.statusCode === 200) {
         let url = response.headers['x-originating-url'];
         let region = url.split('/')[3];
         region = region === 'title' ? 'us' : region;
-        let full_region = flags.get(region.toUpperCase()) ?? "Unknown region";
-        return "Netflix:  " + full_region.toUpperCase() + arrow + "Unlocked ✔";
+        let full_region = flags.get(region.toUpperCase()) ?? "Unknown Region";
+        return "Netflix: " + full_region.toUpperCase() + " -> Unlocked ✔";
       } else if (response.statusCode === 403) {
-        return "Netflix:  " + "Unable to use Netflix";
+        return "Netflix: Cannot use Netflix";
       } else {
-        return "Netflix:  " + "Check failed";
+        return "Netflix: Check failed";
       }
     } catch (error) {
-      return "Netflix:  " + "Check error";
+      console.error("Netflix Error:", error);
+      return "Netflix: Check failed";
     }
   }
   
   async function checkYT() {
     try {
       let response = await httpAPI(BASE_URL_YTB, 'GET', null, opts);
+      console.log("YouTube Response:", response);
       if (response.statusCode === 200) {
         let region = response.headers['x-originating-url'].split('/')[3];
-        let full_region = flags.get(region.toUpperCase()) ?? "Unknown region";
-        return "YouTube Premium:  " + full_region.toUpperCase() + arrow + "Unlocked ✔";
+        let full_region = flags.get(region.toUpperCase()) ?? "Unknown Region";
+        return "YouTube Premium: " + full_region.toUpperCase() + " -> Unlocked ✔";
       } else if (response.statusCode === 403) {
-        return "YouTube Premium:  " + "Unable to use YouTube Premium";
+        return "YouTube Premium: Cannot use YouTube Premium";
       } else {
-        return "YouTube Premium:  " + "Check failed";
+        return "YouTube Premium: Check failed";
       }
     } catch (error) {
-      return "YouTube Premium:  " + "Check error";
+      console.error("YouTube Error:", error);
+      return "YouTube Premium: Check failed";
     }
   }
   
   async function checkGPT() {
     try {
       let response = await httpAPI(Region_URL_GPT, 'GET', null, opts);
+      console.log("ChatGPT Response:", response);
       let region = response.body.split("loc=")[1].split("\n")[0];
-      let full_region = flags.get(region.toUpperCase()) ?? "Unknown region";
-      return "ChatGPT:  " + full_region.toUpperCase() + arrow + "Unlocked ✔";
+      let full_region = flags.get(region.toUpperCase()) ?? "Unknown Region";
+      return "ChatGPT: " + full_region.toUpperCase() + " -> Unlocked ✔";
     } catch (error) {
-      return "ChatGPT:  " + "Check failed";
+      console.error("ChatGPT Error:", error);
+      return "ChatGPT: Check failed";
     }
   }
+  
   
 
 function httpAPI(url, method, headers, options) {

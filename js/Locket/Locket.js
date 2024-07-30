@@ -7,9 +7,14 @@ const options = {
         'X-Platform': 'iOS',
         'User-Agent': request.headers["user-agent"]
     }
-}
+};
 
 $httpClient.get(options, function(error, newResponse, data) {
+    if (error) {
+        $done({ error: "Failed to fetch data" });
+        return;
+    }
+
     const ent = JSON.parse(data);
 
     let jsonToUpdate = {

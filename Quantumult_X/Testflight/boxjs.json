@@ -9,7 +9,7 @@
       "id": "Auto_join_TF",
       "name": "Giám sát TestFlight",
       "author": "@Yuichancsa",
-      "script": "https://raw.githubusercontent.com/yuichydev/quanx/main/Auto_join_TF_boxjs.js",
+      "script": "https://raw.githubusercontent.com/GenzPN-Company-Limited/GenzPN-Proxy/main/Quantumult_X/Testflight/Auto_join_TF_boxjs.js",
       "icons": [
         "https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png",
         "https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png"

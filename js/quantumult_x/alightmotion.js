@@ -3,53 +3,47 @@
 var obj = JSON.parse($response.body);
 var url = $request.url;
 
+console.log("Original URL:", url);
+console.log("Original response:", $response.body);
+
 if (url.includes('getAccountStatusAndLicenses')) {
   obj = {
     "data": {
       "licenses": [{
         "productId": "com.alightcreative.motion.sub.yearly",
-        "subscriptionId": "premium_subscription",
         "active": true,
         "expiryDate": "2099-12-31T23:59:59Z",
-        "type": "subscription",
-        "platform": "ios", 
         "status": "active"
       }],
       "accountStatus": {
         "active": true,
         "type": "premium",
-        "expiry": "2099-12-31T23:59:59Z",
-        "isFreeTrial": false,
         "tier": "pro"
-      },
-      "appBuild": 767,
-      "appVersion": "6.2.10",
-      "deviceModel": "iPhone15,3",
-      "platform": "ios",
-      "language": "vi",
-      "country": "VN"
+      }
     },
-    "success": true,
-    "statusCode": 200
+    "success": true
   };
 } else if (url.includes('purchases/verify/apple')) {
   obj = {
     "status": "active",
-    "isLifetime": true,
-    "expiryDate": "2099-12-31T23:59:59Z"
+    "isLifetime": true
   };
-} else if (url.includes('api.pico.bendingspoonsapps.com/v4/events')) {
+} else if (url.includes('/v4/events')) {
   obj = {
     "data": {
-      "appday": {"value": "1"},
-      "exportCount": {"value": "999"},
-      "benefits": ["premium"],
-      "projectCount": {"value": "999"},
-      "elementCount": {"value": "999"},
-      "status": "premium"
+      "status": "premium",
+      "benefits": ["premium"]
     },
     "success": true
   };
+} else if (url.includes('spidersense.bendingspoons.com')) {
+  obj.premium_enabled = true;
+  obj.subscription_active = true;
+} else if (url.includes('googleapis.com/identitytoolkit')) {
+  if (obj.users) {
+    obj.users[0].premium = true;
+    obj.users[0].subscriptionActive = true;
+  }
 }
 
 console.log("Modified response:", JSON.stringify(obj));

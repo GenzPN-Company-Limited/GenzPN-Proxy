@@ -1,6 +1,7 @@
 // Quantumult X rewrite rule for Alight Motion Premium
 
 var obj = JSON.parse($response.body);
+console.log("Original response:", $response.body);
 
 obj = {
   "data": {
@@ -31,4 +32,5 @@ obj = {
   "statusCode": 200
 };
 
+console.log("Modified response:", JSON.stringify(obj));
 $done({body: JSON.stringify(obj)});

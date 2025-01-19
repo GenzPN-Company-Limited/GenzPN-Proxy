@@ -38,6 +38,18 @@ if (url.includes('getAccountStatusAndLicenses')) {
     "isLifetime": true,
     "expiryDate": "2099-12-31T23:59:59Z"
   };
+} else if (url.includes('api.pico.bendingspoonsapps.com/v4/events')) {
+  obj = {
+    "data": {
+      "appday": {"value": "1"},
+      "exportCount": {"value": "999"},
+      "benefits": ["premium"],
+      "projectCount": {"value": "999"},
+      "elementCount": {"value": "999"},
+      "status": "premium"
+    },
+    "success": true
+  };
 }
 
 console.log("Modified response:", JSON.stringify(obj));

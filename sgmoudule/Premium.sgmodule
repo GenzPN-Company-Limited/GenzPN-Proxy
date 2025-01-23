@@ -1,0 +1,86 @@
+#!name=Premium Services
+#!desc=Premium Services Activation
+
+[MITM]
+hostname = %APPEND% api.revenuecat.com, buy.itunes.apple.com, api.picsart.com, api-account.kinemasters.com, us-central1-alight-creative.cloudfunctions.net, api.adapty.io, carrotweather.herokuapp.com, lapi.photomath.net, lcs-mobile-cops.adobe.io, order.creativeappnow.com, api.mwm-users.com, us-central1-muslim-pro-app.cloudfunctions.net, api.gptkeyboard.app, prod.studysmarter.de, api.qonversion.io, api.blinkist.com, subscription.grammarly.com, api.esound.app, api.purchasely.io, www.tradingview.com
+
+[Script]
+# RevenueCat
+revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$), requires-body=true, max-size=-1, script-path=https://N9dev-dev.github.io/SL/scripts/ARC.js
+
+# Delete Headers
+delete_header = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers), script-path=https://N9dev-dev.github.io/SL/scripts/delete_header.js
+
+# Adapty
+adapty = type=http-response, pattern=https://api.adapty.io/api/v1/sdk/analytics/profiles, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/ADPTY.js
+
+# TIDAL
+tidal = type=http-response, pattern=api\.tidal\.com/v1/users/(\d+)/subscription\?countryCode=([A-Z]{2})&deviceType=[A-Z]+&locale=[a-z]+&platform=[A-Z]+, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/TIDAL.js
+
+# Facemoji
+facemoji = type=http-response, pattern=https://order.creativeappnow.com/iap/receipt, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/Facemoji.js
+
+# Documents (Readdle)
+readdle = type=http-response, pattern=https:\/\/license\.pdfexpert\.com\/api\/2\.0\/(calendarslite|pdfexpert6|documents)\/subscription\/(refresh|check), requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/Documents.js
+
+# iTunes Receipt
+itunes = type=http-response, pattern=^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/BDIts.js
+
+# Muslim Pro
+muslim_pro = type=http-response, pattern=us-central1-muslim-pro-app.cloudfunctions.net/GetUserPremiumInfo, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/MuslimPro.js
+
+# Grammarly
+grammarly = type=http-response, pattern=^https?:\/\/subscription\.grammarly\.com\/api\/v1\/subscription$, requires-body=true, script-path=https://n9dev-dev.github.io/SL/scripts/Grammarly.js
+
+# eSound
+esound = type=http-response, pattern=api.esound.app/account, requires-body=true, script-path=https://n9dev-dev.github.io/SL/scripts/eSound.js
+
+# Tezza
+tezza = type=http-response, pattern=https://api.purchasely.io/paab/user_purchases, requires-body=true, script-path=https://n9dev-dev.github.io/SL/scripts/Tezza.js
+
+# Blinkist
+blinkist = type=http-response, pattern=api.blinkist.com/v4/me/access, requires-body=true, script-path=https://n9dev-dev.github.io/SL/scripts/Blinkist.js
+
+# AnswerAI
+answerai = type=http-response, pattern=api.gptkeyboard.app/api/v1/user/self, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/AnswerAI.js
+
+# Vaia
+vaia = type=http-response, pattern=prod.studysmarter.de/payments/info, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/Vaia.js
+
+# Qonversion
+qonversion = type=http-response, pattern=api.qonversion.io/v1/user/init, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/QNVRN.js
+
+# DJ (edjing Mix)
+dj = type=http-response, pattern=https://api.mwm-users.com/me/features, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/edjingMix.js
+
+# VivaCut
+vivacut = type=http-response, pattern=https://api-fra.vivacut.com/api/rest/commerce/integrate/vip/perform, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/VivaCut.js
+
+# Carrot Weather
+carrot = type=http-response, pattern=https://carrotweather.herokuapp.com/parse/functions/findSubscriptionsForUserId, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/Carrot.js
+
+# Photomath
+photomath = type=http-response, pattern=https://lapi.photomath.net/v5/me, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/Photomath.js
+
+# Lightroom
+lightroom = type=http-request, pattern=https://lcs-mobile-cops.adobe.io/mobiles/access_profile/v3, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/Lightroom.js
+
+# VSCO
+vsco = type=http-request, pattern=^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$), requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/VSCO.js
+
+# KineMaster
+kinemaster = type=http-response, pattern=https://api-account.kinemasters.com/v2/user/subscribe, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/KineMaster.js
+
+# PicsArt
+picsart = type=http-request, pattern=https://api.picsart.com/gw-v2/shop/subscription/apple/purchases, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/PicsArt.js
+
+# Alight Motion
+alight_motion = type=http-response, pattern=https://us-central1-alight-creative.cloudfunctions.net/getAccountStatusAndLicenses, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/AlightMotion.js
+
+# Sandbox
+sandbox = type=http-response, pattern=api.sandbox.love/accounts/current, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/SandBox.js
+
+# TradingView
+tradingview_device = type=http-response, pattern=www.tradingview.com/order/apple/device/, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/TradingViewDeviceReceipt.js
+tradingview_receipt = type=http-response, pattern=www.tradingview.com/order/apple/receipt/, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/TradeViewAppleReceipt.js
+tradingview_profile = type=http-response, pattern=www.tradingview.com/api/v1/user/profile/me/, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/TradingViewProf.js

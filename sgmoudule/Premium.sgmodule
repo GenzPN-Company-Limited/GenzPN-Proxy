@@ -8,9 +8,6 @@ hostname = %APPEND% api.revenuecat.com, buy.itunes.apple.com, api.picsart.com, a
 # RevenueCat
 revenuecat = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$), requires-body=true, max-size=-1, script-path=https://N9dev-dev.github.io/SL/scripts/ARC.js
 
-# Delete Headers
-delete_header = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers), script-path=https://N9dev-dev.github.io/SL/scripts/delete_header.js
-
 # Adapty
 adapty = type=http-response, pattern=https://api.adapty.io/api/v1/sdk/analytics/profiles, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/ADPTY.js
 

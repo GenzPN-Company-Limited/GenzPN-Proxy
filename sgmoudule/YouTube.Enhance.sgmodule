@@ -1,15 +1,16 @@
-#!name=Youtube (Music) Enhance  
-#!desc=适用于 Youtube & Youtube Music  
-#!arguments=屏蔽上传按钮:true,屏蔽选段按钮:true,字幕翻译语言:off,歌词翻译语言:off,脚本执行引擎:auto,启用调试模式:false  
-#!arguments-desc=- 屏蔽参数：[true, false] \n- 翻译参数：[语言代码, off] \n- 脚本引擎：[auto, jsc, webview]\n\n1. 语言代码遵循 Google Translate Languages Codes, 当填入 off 时关闭翻译\n2. 推荐使用 jsc 引擎，但你仍可以切换成 webview 体验 Surge 新特性\n3. 开启调试模式用于输出更多日志  
+#!name=Youtube (Music) Enhance
+#!desc=For Youtube & Youtube Music
+#!arguments=Block Upload Button:true,Block Segment Button:true,Subtitle Translation Language:off,Lyric Translation Language:off,Script Execution Engine:jsc,Enable Debug Mode:false
+#!arguments-desc=- Block Parameters: [true, false] \n- Translation Parameters: [language code, off] \n- Script Engine: [auto, jsc, webview]\n\n1. Language codes follow Google Translate Languages Codes. Use "off" to disable translation.\n2. It is recommended to use the jsc engine, but you can switch to webview to experience Surge's new features.\n3. Enable debug mode to output more logs.
 
-# > Note  
-# Youtube 画中画和后台播放可在客户端内关闭  
-#   - 设置 -> 播放 -> 画中画  
-#   - 设置 -> 后台播放和下载 -> 后台播放  
+# Credit : Maasea Github and ChatGPT
+# > Note
+# Disable Picture-in-Picture and Background Playback within the client:
+#   - Settings -> General -> Picture-in-Picture
+#   - Settings -> Background Playback & Downloads -> Background Playback
 
-[Rule]  
-AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT  
+[Rule]
+AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT
 AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT  
 
 [Script]

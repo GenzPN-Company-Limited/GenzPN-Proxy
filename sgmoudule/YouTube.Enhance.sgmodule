@@ -1,23 +1,23 @@
 #!name=Youtube (Music) Enhance
-#!desc=For Youtube & Youtube Music
-#!arguments=Block Upload Button:true,Block Segment Button:true,Subtitle Translation Language:off,Lyric Translation Language:off,Script Execution Engine:jsc,Enable Debug Mode:false
-#!arguments-desc=- Block Parameters: [true, false] \n- Translation Parameters: [language code, off] \n- Script Engine: [auto, jsc, webview]\n\n1. Language codes follow Google Translate Languages Codes. Use "off" to disable translation.\n2. It is recommended to use the jsc engine, but you can switch to webview to experience Surge's new features.\n3. Enable debug mode to output more logs.
+#!desc=适用于 Youtube & Youtube Music
+#!arguments=屏蔽上传按钮:true,屏蔽选段按钮:true,字幕翻译语言:vi_VN,歌词翻译语言:vi_VN,脚本执行引擎:auto,启用调试模式:false
+#!arguments-desc=- 屏蔽参数：[true, false] \n- 翻译参数：[语言代码, off] \n- 脚本引擎：[auto, jsc, webview]\n\n1. 语言代码遵循 Google Translate Languages Codes, 当填入 off 时关闭翻译\n2. 推荐使用 jsc 引擎，但你仍可以切换成 webview 体验 Surge 新特性\n3. 开启调试模式用于输出更多日志
 
-# Credit : Maasea Github and ChatGPT
 # > Note
-# Disable Picture-in-Picture and Background Playback within the client:
-#   - Settings -> General -> Picture-in-Picture
-#   - Settings -> Background Playback & Downloads -> Background Playback
+# Youtube 画中画和后台播放可在客户端内关闭
+#   - 设置 -> 播放 -> 画中画
+#   - 设置 -> 后台播放和下载 -> 后台播放
+
 
 [Rule]
 AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT
-AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT  
+AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT
 
 [Script]
-youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://raw.githubusercontent.com/GenzPN-Company-Limited/GenzPN-Proxy/refs/heads/main/js/youtube/youtube.response.preview.js,argument="{"lyricLang":"off","captionLang":"off","blockUpload":true,"blockImmersive":true,"debug":false}"
+youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine={{{脚本执行引擎}}},script-path=https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/dist/youtube.response.preview.js,argument="{"lyricLang":"{{{歌词翻译语言}}}","captionLang":"{{{字幕翻译语言}}}","blockUpload":{{{屏蔽上传按钮}}},"blockImmersive":{{{屏蔽选段按钮}}},"debug":{{{启用调试模式}}}}"
 
-[Map Local]  
-^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=502  
+[Map Local]
+^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=502
 
-[MITM]  
-hostname = %APPEND% *.googlevideo.com, youtubei.googleapis.com  
+[MITM]
+hostname = %APPEND% *.googlevideo.com, youtubei.googleapis.com

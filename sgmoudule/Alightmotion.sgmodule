@@ -1,0 +1,9 @@
+#!name=Alight Motion Services
+#!desc=Premium Services Activation
+
+[MITM]
+hostname = %APPEND% us-central1-alight-creative.cloudfunctions.net
+
+[Script]
+# Alight Motion
+alight_motion = type=http-response, pattern=https://us-central1-alight-creative.cloudfunctions.net/getAccountStatusAndLicenses, requires-body=true, script-path=https://raw.githubusercontent.com/GenzPN-Company-Limited/GenzPN-Proxy/main/js/alightmotion/code.js

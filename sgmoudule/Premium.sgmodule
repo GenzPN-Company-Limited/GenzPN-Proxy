@@ -2,7 +2,7 @@
 #!desc=Premium Services Activation
 
 [MITM]
-hostname = %APPEND% api.revenuecat.com, buy.itunes.apple.com, api.picsart.com, api-account.kinemasters.com, us-central1-alight-creative.cloudfunctions.net, api.adapty.io, carrotweather.herokuapp.com, lapi.photomath.net, lcs-mobile-cops.adobe.io, order.creativeappnow.com, api.mwm-users.com, us-central1-muslim-pro-app.cloudfunctions.net, api.gptkeyboard.app, prod.studysmarter.de, api.qonversion.io, api.blinkist.com, subscription.grammarly.com, api.esound.app, api.purchasely.io, www.tradingview.com
+hostname = %APPEND% api.revenuecat.com, buy.itunes.apple.com, api.picsart.com, api-account.kinemasters.com, api.adapty.io, carrotweather.herokuapp.com, lapi.photomath.net, lcs-mobile-cops.adobe.io, order.creativeappnow.com, api.mwm-users.com, us-central1-muslim-pro-app.cloudfunctions.net, api.gptkeyboard.app, prod.studysmarter.de, api.qonversion.io, api.blinkist.com, subscription.grammarly.com, api.esound.app, api.purchasely.io, www.tradingview.com
 
 [Script]
 # RevenueCat
@@ -70,9 +70,6 @@ kinemaster = type=http-response, pattern=https://api-account.kinemasters.com/v2/
 
 # PicsArt
 picsart = type=http-request, pattern=https://api.picsart.com/gw-v2/shop/subscription/apple/purchases, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/PicsArt.js
-
-# Alight Motion
-alight_motion = type=http-response, pattern=https://us-central1-alight-creative.cloudfunctions.net/getAccountStatusAndLicenses, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/AlightMotion.js
 
 # Sandbox
 sandbox = type=http-response, pattern=api.sandbox.love/accounts/current, requires-body=true, script-path=https://N9dev-dev.github.io/SL/scripts/SandBox.js

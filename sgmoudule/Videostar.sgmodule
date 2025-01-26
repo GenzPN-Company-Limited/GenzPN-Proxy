@@ -1,0 +1,8 @@
+#!name=Videostar Services
+#!desc=Videostar Services Activation
+
+[mitm]
+hostname = *.videostarapp.com
+
+[Script]
+videostar = type=http-response, pattern=https://*.videostarapp.com/scripts/subsNew.php, requires-body=true, script-path=https://raw.githubusercontent.com/GenzPN-Company-Limited/GenzPN-Proxy/main/js/videostar/code.js

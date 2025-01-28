@@ -1,0 +1,10 @@
+#!name=Unlock Any Revenuecat
+#!desc=Auto All Revenuecat
+[MITM]
+hostname = %@APPEND% api.revenuecat.com, isi.csan.goodnotes.com
+
+[URL Rewrite]
+^https:\/\/(api.revenuecat|isi.csan.goodnotes)\.com\/.+\/(receipts$|subscribers\/[^\/]+$|offers$) https://api.langkhach89.workers.dev header
+
+[Script]
+Revenuecat = type=http-request,pattern=^https:\/\/(api.revenuecat|isi.csan.goodnotes)\.com\/.+\/(receipts$|subscribers\/[^\/]+$|offers$),requires-body=1,max-size=0,script-path=scripts/langkhach/revenuecat.js, timeout=10

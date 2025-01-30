@@ -8,3 +8,8 @@ GenzPN-Proxy is a custom proxy configuration tailored for specific network needs
 - Integrated DNS settings
 - Compatibility with various backends
 - Automated translation of captions to Vietnamese
+
+
+Thanks you
+
+(Youtube)[]

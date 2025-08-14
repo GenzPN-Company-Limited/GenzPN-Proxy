@@ -18,8 +18,8 @@ var subscriptionDetails = {
   expires_date: "2099-12-18T01:04:17Z",
   grace_period_expires_date: null,
   unsubscribe_detected_at: null,
-  original_purchase_date: "2025-02-17T01:04:17Z",
-  purchase_date: "2025-02-17T01:04:17Z",
+  original_purchase_date: "2025-08-14T01:04:17Z",
+  purchase_date: "2025-08-14T01:04:17Z",
   store: "app_store"
 };
 

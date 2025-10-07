@@ -6,10 +6,10 @@ try {
     let obj = JSON.parse(body);
     
     // Modify user profile details (from second script)
-    obj.email = obj.email || "666888@88.com"; // Preserve original email if available
-    obj.full_name = obj.full_name || "我是Mr.Eric";
-    obj.first_name = obj.first_name || "我是";
-    obj.last_name = obj.last_name || "Mr.Eric";
+    obj.email = obj.email || "nguyenvoanhson75@gmail.com"; // Preserve original email if available
+    obj.full_name = obj.full_name || "GenzPN Company Limited";
+    obj.first_name = obj.first_name || "GenzPN";
+    obj.last_name = obj.last_name || "Company Limited";
     
     // Ensure entitlement exists
     obj.entitlement = obj.entitlement || {};
